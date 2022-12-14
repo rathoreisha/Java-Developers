@@ -1,0 +1,311 @@
+Stream API
+---------------------------------------------------------------------------------
+
+-> The addition of the stream api was one of the major features added to Java 8.
+
+-> Stream API is used to process the data.
+
+Note: Stream api is not for storing the data. It is meant for only processing the data.
+
+Note: In java, we will use collections to store the data. We will use Streams to process the data.
+
+Few Important Points about Streams
+----------------------------------
+1) A stream is not a data structure.
+
+2) Stream is used to perform bunch of operations on the data. 
+
+3) Stream will take the data from a Collection or Array.
+
+4) Stream will perform operations on the data but it will not change original data structure.
+
+
+Stream Creation
+----------------
+-> Streams can be created in two ways.
+
+		i) Using of ( ) method we can create stream
+		ii) Using stream( ) method also we can create stream
+
+Approach-1:
+------------------
+
+	Stream<Integer> stream = Stream.of(1,2,3,4,5,6);
+
+
+Example :
+
+package creationOfStream;
+
+import java.util.stream.Stream;
+
+public class ByUsingOfMethod {
+
+	public static void main(String[] args) {
+		
+	
+	Stream<Integer> of = Stream.of(10,20,30,49,88);
+	
+	of.forEach((i)->System.out.println(i));
+	//of.forEach(System.out::println);
+}
+}
+
+
+
+
+Approach-2:
+-----------
+
+	 List<String> list = new ArrayList<>();
+		list.add("Anushka");
+		list.add("Katrina");
+		list.add("Aliya");
+		list.add("Deepika");
+		list.add("Amisha");
+
+	 Stream<String> stream = list.stream();
+
+
+Exapmle :
+
+
+package creationOfStream;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class ByUsingStreamMethod {
+
+	
+	public static void main(String[] args) {
+		
+		 List<String> list = new ArrayList<>();
+			list.add("Anushka");
+			list.add("Katrina");
+			list.add("Aliya");
+			list.add("Deepika");
+			list.add("Amisha");
+			System.out.println(list);
+
+		 Stream<String> stream = list.stream();
+
+		// stream.forEach((n)-> System.out.println(n));
+		 stream.forEach(System.out::println);
+	}
+}
+
+
+
+
+-> By using Streams we can perform below operations on the data
+
+		i) Intermediate Operations
+		ii) Terminal Operations
+
+-> Intermediate operational methods will not produce any results. 
+They usally accept functional interface as parameters and always returns new stream. 
+Some examples for intermediate operations are filter() & map() methods.
+
+-> Terminal operational method will produce some results eg : count ( ), collect( ) etc.
+
+
+
+
+----------------------------------------------------------------------------------
+Streams with Filtering
+----------------------------------------------------------------------------------
+-> Stream interface having filter( ) method.
+
+-> filter( ) method will take Predicate as input
+
+-> Predicate is a functional interface which will take input and returns boolean value
+
+-> Predicate interface contains test( ) as abstract method. This method is used to execute lambda.
+
+
+Example : filter operation with Strem by using of method
+
+package filterOperations;
+
+import java.util.stream.Stream;
+
+public class ByUsingOfMethod {
+
+	
+	public static void main(String[] args) {
+		
+		Stream<Integer> of = Stream.of(11,22,33,44,23,77);
+		
+	//	of.forEach(System.out::println);
+		 Stream<Integer> filter = of.filter((i)-> i>=33);
+		// filter.forEach((i) ->System.out.println(i));
+		 filter.forEach(System.out::println);
+		 
+	}
+}
+
+
+Example : Stream with filter in case of strem() method
+
+
+package filterOperations;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class FilterStreamMethod {
+
+	
+	public static void main(String[] args) {
+		
+		
+		 List<String> list = new ArrayList<>();
+			list.add("Anushka");
+			list.add("Katrina");
+			list.add("Aliya");
+			list.add("Deepika");
+			list.add("Amisha");
+
+		 Stream<String> stream = list.stream();
+		 
+		 Stream<String> filter = stream.filter((name) -> name.startsWith("A"));
+	//	 filter.forEach(System.out::println);
+		filter.forEach((name) -> System.out.println((name)));
+
+	}
+}
+
+
+
+Example 3:
+
+package filterOperations;
+
+public class Person {
+
+	private String name;
+
+	private int age;
+
+	private String designation;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	@Override
+	public String toString() {
+		return "Person [name=" + name + ", age=" + age + ", designation=" + designation + "]";
+	}
+	
+	
+}
+
+
+package filterOperations;
+
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
+public class PersonFilter {
+
+	public static void main(String[] args) {
+		
+		Person p1=new Person();
+		p1.setName("Santosh");
+		p1.setAge(22);
+		p1.setDesignation("Software Engineer");
+		
+		Person p2=new Person();
+		p2.setName("Ganesh");
+		p2.setAge(25);
+		p2.setDesignation("Software Engineer");
+		
+		Person p3=new Person();
+		p3.setName("vikas");
+		p3.setAge(26);
+		p3.setDesignation("SoftwareEngineer");
+		
+		Person p4=new Person();
+		p4.setName("pavan");
+		p4.setAge(79);
+		p4.setDesignation("SoftwareEngineer");
+		
+		Person p5=new Person();
+		p5.setName("balaji");
+		p5.setAge(67);
+		p5.setDesignation("SoftwareEngineer");
+		
+		
+		ArrayList<Person> al=new ArrayList();
+		
+		al.add(p1);
+		al.add(p2);
+		al.add(p3);
+		al.add(p4);
+		al.add(p5);
+		
+		System.out.println(al);
+		
+		Stream<Person> stream = al.stream();
+	     
+//		Stream<Person> filter = stream.filter((p) -> p.getAge() >=25);
+//		
+//	//	filter.forEach(System.out::println);
+//		filter.forEach((name)->System.out.println(name));
+		
+		
+	//	Stream<Person> filter = stream.filter((p) -> p.getAge() >=25 && p.getAge()<=50);
+	//	filter.forEach((p) -> System.out.println(p));
+		
+		
+		Stream<Person> filter = stream.filter((p) -> p.getAge() >=25 || p.getAge()<=50);
+		filter.forEach((p) -> System.out.println(p));
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
